@@ -21,16 +21,17 @@
 
     h1 {
       font-size: 60px;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
 
     button {
       font-size: 30px;
-      padding: 15px 30px;
-      margin: 20px;
+      padding: 12px 25px;
+      margin: 15px;
       cursor: pointer;
-      border-radius: 15px;
+      border-radius: 12px;
       border: none;
+      transition: all 0.3s ease;
     }
 
     #yes {
@@ -45,7 +46,7 @@
     }
 
     img {
-      width: 300px;
+      width: 320px;
       margin-top: 20px;
       border-radius: 15px;
     }
@@ -54,32 +55,59 @@
 <body>
 
   <div class="container" id="main">
-    <h1>Will You Be My Valentine ANU? ❤️</h1>
+    <h1 id="question">Will You Be My Valentine? ❤️</h1>
     <button id="yes" onclick="love()">Yes 💕</button>
     <button id="no" onmouseover="moveButton()">No 😢</button>
   </div>
 
   <script>
+    let moveCount = 0;
+    const maxMoves = 5;
+
+    const messages = [
+      "Are you sure? 🥺",
+      "Really sure?? 😭",
+      "Think carefully... 😏",
+      "Last chance... 😳",
+      "Okay fine... 😤"
+    ];
+
     function love() {
       document.getElementById("main").innerHTML = `
-        <h1>YAAAY ❤️ I LOVE YOU ANU 😍</h1>
-        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3EzdTdkb2U1dWZtcGs4bmxvbTRuaWhlaXMyMjE1OWUxcWw3bjRrdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iyN7EivGQSUxi/giphy.gif">
+        <h1>YAAAY ❤️ I LOVE YOU 😍</h1>
+        <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
       `;
     }
 
     function moveButton() {
       const button = document.getElementById("no");
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-      button.style.left = x + "px";
-      button.style.top = y + "px";
+      const yesBtn = document.getElementById("yes");
+      const question = document.getElementById("question");
+
+      if (moveCount < maxMoves) {
+
+        // Move button
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
+        button.style.position = "fixed";
+        button.style.left = x + "px";
+        button.style.top = y + "px";
+
+        // Change text
+        question.textContent = messages[moveCount];
+
+        // Grow Yes button
+        yesBtn.style.transform = `scale(${1 + (moveCount * 0.3)})`;
+
+        moveCount++;
+
+      } else {
+        // Remove No button after 5 tries
+        button.style.display = "none";
+        question.textContent = "You have no choice now 😈❤️";
+      }
     }
   </script>
 
 </body>
 </html>
-
-
-
-
-
